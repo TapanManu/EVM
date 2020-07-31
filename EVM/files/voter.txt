@@ -1,0 +1,30 @@
+AAA0000000 Tapan Manu 2000/04/20 thiruvalla
+AAA0000001 Sreejith A 1987/07/11 attingal
+AAA0000002 Sujith VI 1996/03/23 kannur
+AAA0000003 Mohanlal 1980/04/04 thiruvalla
+AAA0000004 Pranav Damodar 1985/05/23 kannur
+AAA0000005 Usman Khalid 1940/09/09 kannur
+AAA0000006 Biju Manoj 1987/11/12 kannur
+AAA0000007 Toms Mathew 1995/03/02 kannur
+AAA0000008 Bikas Roy 2001/01/02 kannur
+AAA0000009 Raghavan 1955/05/05 kannur
+AAA0000010 Sudhi 1997/03/03 kannur
+AAA0000011 Jose Prakash 1988/04/03 kannur
+AAA0000012 MB Jayakrishnan 1992/10/12 kannur
+AAA0000013 Amjad khan 1990/09/23 kannur
+AAA0000014 Salim Ahmed 2000/07/30 kannur
+AAA0000015 Vijayan R 1995/03/30 kannur
+AAA0000016 Soman 1998/04/14 kannur
+AAA0000018 Suji 1999/07/03 kannur
+AAA0000017 Sujith 1999/07/03 kannur
+AAA0000019 Sjith 2000/01/01 kollam
+AAA0000020 Sjith 2000/01/01 kollam
+AAA0000021 sujith 1999/07/03 kannur
+AAA0000022 sujith 1999/07/03 kannur
+AAA0000023 suji 1999/07/03 kannur
+AAA0000024 suji 1999/07/03 kannur
+AAA0000025 suji 1999/07/03 kannur
+AAA0000026 suji 1999/07/03 kannur
+AAA0000027 suji 1999/03/07 kannur
+AAA0000028 suji 1999/03/07 kannur
+AAA0000029 Sujir 1947/05/09 kannur

@@ -1,0 +1,10 @@
+1 kollam 2500000
+2 kannur 3000000
+3 thiruvalla 45000000
+4 kochi 230000000
+5 attingal 10000000
+6 kozhikode 240000000
+7 kottayam 23300303
+8 thiruvanathapuram 50000000
+9 malappuram 10000000000
+10 palakkad 1933670000
