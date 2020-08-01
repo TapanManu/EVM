@@ -9,6 +9,7 @@ import Candidate.Candidate;
 public class Result {
         public static int cnt=0;
         public static ArrayList<String> l = new ArrayList<String>();
+        public static ArrayList<String> t = new ArrayList<String>();
         public static long w=0;
         public static String con="";
         public Result(String c){
@@ -73,6 +74,7 @@ public class Result {
             if(con.equals(c[i].cons())){
                ++cnt;
                l.add(c[i].getVotes()+"");
+               t.add(c[i].vid()+"");
             }
             
             System.out.println(c[i].vid()+ " " +c[i].getVotes()+" "+c[i].cons());
@@ -136,7 +138,8 @@ public class Result {
         catch(IOException e){
         	System.out.println("error file");
         }
-        Res r = new Res(w,cnt,l);
+        //Res r = new Res(w,cnt,l);
+        Pie p = new Pie(w,cnt,l,t);
 		
 		}
 	}
