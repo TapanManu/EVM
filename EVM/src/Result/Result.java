@@ -1,22 +1,37 @@
 package Result;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import Candidate.Candidate;
+import java.util.Collections;
+
+import Crypto.Decrypt;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import javax.crypto.BadPaddingException;
 
 public class Result {
         public static int cnt=0;
         public static ArrayList<String> l = new ArrayList<String>();
         public static ArrayList<String> t = new ArrayList<String>();
         public static long w=0;
+        public static int k=0;
         public static String con="";
+        public static ArrayList<String> msg=new ArrayList<String>();
         public Result(String c){
             this.con=c;
             System.out.println(con);
             resu();
         }
+        private static String privateKey = "MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAKAUZV+tjiNBKhlBZbKBnzeugpdYPhh5PbHanjV0aQ+LF7vetPYhbTiCVqA3a+Chmge44+prlqd3qQCYra6OYIe7oPVq4mETa1c/7IuSlKJgxC5wMqYKxYydb1eULkrs5IvvtNddx+9O/JlyM5sTPosgFHOzr4WqkVtQ71IkR+HrAgMBAAECgYAkQLo8kteP0GAyXAcmCAkA2Tql/8wASuTX9ITD4lsws/VqDKO64hMUKyBnJGX/91kkypCDNF5oCsdxZSJgV8owViYWZPnbvEcNqLtqgs7nj1UHuX9S5yYIPGN/mHL6OJJ7sosOd6rqdpg6JRRkAKUV+tmN/7Gh0+GFXM+ug6mgwQJBAO9/+CWpCAVoGxCA+YsTMb82fTOmGYMkZOAfQsvIV2v6DC8eJrSa+c0yCOTa3tirlCkhBfB08f8U2iEPS+Gu3bECQQCrG7O0gYmFL2RX1O+37ovyyHTbst4s4xbLW4jLzbSoimL235lCdIC+fllEEP96wPAiqo6dzmdH8KsGmVozsVRbAkB0ME8AZjp/9Pt8TDXD5LHzo8mlruUdnCBcIo5TMoRG2+3hRe1dHPonNCjgbdZCoyqjsWOiPfnQ2Brigvs7J4xhAkBGRiZUKC92x7QKbqXVgN9xYuq7oIanIM0nz/wq190uq0dh5Qtow7hshC/dSK3kmIEHe8z++tpoLWvQVgM538apAkBoSNfaTkDZhFavuiVl6L8cWCoDcJBItip8wKQhXwHp0O3HLg10OEd14M58ooNfpgt+8D8/8/2OOFaR0HzA+2Dm";
+	 
 	public static void declare(ArrayList<String> cons,Candidate[] c,int length) throws IOException{
         long max[]=new long[cons.size()];
 		long secmax[] = new long[cons.size()];
@@ -50,7 +65,27 @@ public class Result {
                                             if(con.equals(c[i].cons())){
                                                 Result.w = (max[j]-secmax[j]);
                                             }
-					    System.out.println("Winner:"+line.split(" ",5)[1]+" of "+c[i].cons()+" by "+(max[j]-secmax[j])+" votes ");
+					    if(max[j]==0){
+                                                        msg.add("Winner:"+line.split(" ",5)[1]+" of "+c[i].party()+" of "+c[i].cons()+" as no other candidate registered");
+					        	System.out.println(msg.get(k));
+					        }
+					        else{
+                                                        msg.add("Winner:"+line.split(" ",5)[1]+" of "+c[i].party()+" of "+c[i].cons()+" by "+(max[j]-secmax[j])+" votes ");
+					    		System.out.println(msg.get(k));
+					        }
+                                                k++;
+					        Boolean writeflag=false;
+					        if(j==0)
+					        	writeflag=false;    //prevent multiplewriting of same content
+					        else
+					        	writeflag=true;
+					        try(FileWriter w = new FileWriter("files/party_win.txt",writeflag)){
+					        	w.write(c[i].party()+" "+c[i].cons()+"\n");
+					        	w.close();
+					        }
+					        catch(IOException ioe){
+					        	System.out.println("File not Found");
+					        }	   	
 					    flag=1;
 					    break;
 					}
@@ -60,9 +95,39 @@ public class Result {
        }
    }
 }
-    public static void addVotes(Candidate[] c,int length,ArrayList<String> cons){
+        public static void party_declare() throws IOException{
+		ArrayList<String> party = new ArrayList<String>();
+		ArrayList<String> pr = new ArrayList<String>();
+		try{
+			BufferedReader br = new BufferedReader(new FileReader("files/party_win.txt"));
+			String line;
+			
+			while((line=br.readLine())!=null){
+				party.add(line.split(" ")[0]);
+			}
+		}
+		catch(IOException ix){
+			System.out.println("File not found1");
+		}
+        try{
+           BufferedReader r = new BufferedReader(new FileReader("files/party.txt"));
+           String p;
+           while((p=r.readLine())!=null){
+           	 pr.add(p.split(" ")[1]);
+           }
+           for(String s:pr){
+           	 System.out.println(s+" "+Collections.frequency(party,s));
+           }
+        }	
+        catch(IOException ei){
+        	System.out.println("File not found");
+        }		
+	}
+    public static void addVotes(Candidate[] c,int length,ArrayList<String> cons)throws IllegalBlockSizeException, InvalidKeyException, 
+                                NoSuchPaddingException, BadPaddingException{
     	try{
-    		RandomAccessFile b = new RandomAccessFile("files/poll.txt","r");
+            new Decrypt("files/votes.encrypted",privateKey);
+    	    RandomAccessFile b = new RandomAccessFile("files/votes.decrypted","r");
             String line;
             //int j=0;
             for(int i=0;i<length;i++){
@@ -74,7 +139,7 @@ public class Result {
             if(con.equals(c[i].cons())){
                ++cnt;
                l.add(c[i].getVotes()+"");
-               t.add(c[i].vid()+"");
+               t.add(c[i].party()+"");  //
             }
             
             System.out.println(c[i].vid()+ " " +c[i].getVotes()+" "+c[i].cons());
@@ -131,15 +196,24 @@ public class Result {
                     	c[j++] = new Candidate(list[0],list[list.length-2],list[list.length-1]);
                     	}
         	    }
+                try{
                 addVotes(c,j,cons); 
+                }
+                catch(IllegalBlockSizeException|InvalidKeyException|NoSuchPaddingException|BadPaddingException e){
+                	System.out.println("crypto error");
+                }
+                System.out.println("PARTY_RESULTS");
+        	party_declare();
         	}
+                
 
         }
         catch(IOException e){
         	System.out.println("error file");
         }
         //Res r = new Res(w,cnt,l);
-        Pie p = new Pie(w,cnt,l,t);
-		
-		}
+   
+        Pie p = new Pie(w,cnt,l,t,msg);
+	}
+        
 	}

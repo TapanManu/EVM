@@ -6,7 +6,7 @@
 package evm;
 /**
  *
- * @author Sjith & Thara
+ * @author Sjith & Taps
  */
 public class EVM {
 

@@ -1,6 +1,7 @@
 package Voter;
 
 import Poll.Valid;
+import Crypto.Encrypt;
 import java.io.IOException;
 import java.util.GregorianCalendar;
 import java.util.Calendar;
@@ -8,6 +9,11 @@ import java.io.FileWriter; //used instead of Database to store temporary(voter's
 //import Voter.Voter ;   //compile in parent directory of voter i.e in src otherwise error
 
 //voter validity and removal of duplicates can be done only with address field provided!!
+import javax.crypto.IllegalBlockSizeException;
+import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.BadPaddingException;
 
 class VoteEligibility extends Exception{
 	public VoteEligibility(String s){
@@ -23,7 +29,13 @@ class NewVoter{
             this.uid=id;
             this.dob=dob;
             this.c=con;
+            try{
             vote();
+            }
+            catch(IllegalBlockSizeException|InvalidKeyException|
+                    NoSuchPaddingException|BadPaddingException f){
+                System.out.println("crypto error");
+            }
         }
 	public static void getDiff(GregorianCalendar a,GregorianCalendar b) throws VoteEligibility{
         int diff = b.get(Calendar.YEAR) - a.get(Calendar.YEAR);
@@ -35,7 +47,8 @@ class NewVoter{
         	throw new VoteEligibility("under 18 years of age !\nnot eligible for application");
 	}
 
-	public static void vote() throws IOException{
+	public static void vote() throws IOException,IllegalBlockSizeException,InvalidKeyException,
+										 NoSuchPaddingException,BadPaddingException{
 		try(FileWriter out = new FileWriter("files/voter.txt",true)){
 			int count=1;
 			GregorianCalendar g ;
@@ -43,6 +56,7 @@ class NewVoter{
 				//data should be read from aadhar database or enter manually
 				String[] date=dob.split("/",3);
 				try{
+                                    System.out.println("hello");
 				g = new GregorianCalendar(Integer.parseInt(date[0]),Integer.parseInt(date[1])-1,Integer.parseInt(date[2]));
                 getDiff(g,new GregorianCalendar());
                 }
@@ -67,6 +81,6 @@ class NewVoter{
 			System.out.println("The system has detected some failure!");
 		}
           
-
+            new Encrypt("files/voter.txt");
 	}
 }

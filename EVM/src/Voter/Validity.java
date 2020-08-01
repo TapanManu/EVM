@@ -1,4 +1,4 @@
-package Voter;
+/*package Voter;
 
 
 import java.io.BufferedReader;
@@ -8,8 +8,8 @@ import java.io.IOException;
  *
  * @author Tapan
  */
-public class Validity {
-    public static isDuplicate(String[] w,String[] list){
+/*public class Validity {
+    /*public static isDuplicate(String[] w,String[] list){
         return ()
     }
     public static int valid(String[] list) throws IOException{
@@ -37,3 +37,4 @@ public class Validity {
     }
     
 }
+*/

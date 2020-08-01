@@ -1,15 +1,27 @@
 package Poll;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import Crypto.Decrypt;
+import Crypto.Encrypt;
+
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import javax.crypto.BadPaddingException;
+
 /**
  *
- * @author robinhood
+ * @author tapan
  */
 class Trials extends javax.swing.JFrame 
 {       //public class
@@ -57,8 +69,26 @@ class Trials extends javax.swing.JFrame
         setVisible(true);
         setSize(400, 400);
         setLayout(null);
-    }                        
-	private void fileWrite(int vote)
+    }      
+    public static void shuffle(String filename) throws IOException{
+		ArrayList<String> str = new ArrayList<String>();
+		BufferedReader br = new BufferedReader(new FileReader(filename));
+		String line;
+		while((line=br.readLine())!=null){
+			str.add(line);
+		}
+		br.close();
+		FileWriter w = new FileWriter(filename);
+		Collections.shuffle(str);
+		w.write(str.get(0)+"\n");
+		w.close();
+		FileWriter ow = new FileWriter(filename,true);
+		for(int i=1;i<str.size();i++)
+			ow.write(str.get(i)+"\n");
+		ow.close();
+	}
+	private void fileWrite(int vote)throws IllegalBlockSizeException, InvalidKeyException, 
+                                NoSuchPaddingException, BadPaddingException
 	{
 		FileWriter fw;
 		try{
@@ -66,6 +96,8 @@ class Trials extends javax.swing.JFrame
 			fw.write(candidates[vote]);
 			fw.write(" "+constituency+"\n");
 			fw.close();
+                        shuffle("files/votes.txt");
+			new Encrypt("files/votes.txt");
 		}
 		catch(ArrayIndexOutOfBoundsException e)
 		{
@@ -73,6 +105,7 @@ class Trials extends javax.swing.JFrame
 				fw=new FileWriter("files/votes.txt",true);
 				fw.write("Invalid "+constituency+"\n");
 				fw.close();
+                                shuffle("files/votes.txt");
 			}
 			catch(IOException h)
 			{
@@ -93,7 +126,13 @@ class Trials extends javax.swing.JFrame
             if(b==cand.get(i))
             {
                 System.out.println("hello"+b.getText());
+                try{
                 fileWrite(i);
+                }
+                catch(IllegalBlockSizeException|InvalidKeyException|NoSuchPaddingException|
+                    BadPaddingException e){
+                System.out.println("crypto error");
+            }
                 this.dispose();
                 Vote v = new Vote();
                 v.setVisible(true);

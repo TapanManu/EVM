@@ -126,7 +126,9 @@ public class admin_panel extends javax.swing.JFrame {
     }//GEN-LAST:event_voterActionPerformed
 
     private void candidate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_candidate1ActionPerformed
-        // TODO add your handling code here:
+        AddCandi c = new AddCandi();
+        c.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_candidate1ActionPerformed
 
     /**

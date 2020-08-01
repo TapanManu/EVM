@@ -103,7 +103,7 @@ class Ticket {
                       count++;
                       continue;
 			    }
-				        g = new GregorianCalendar(Integer.parseInt(date[0]),Integer.parseInt(date[1])-1,Integer.parseInt(date[2]));
+		g = new GregorianCalendar(Integer.parseInt(date[0]),Integer.parseInt(date[1])-1,Integer.parseInt(date[2]));
                 getDiff(g,new GregorianCalendar());
                 }
                 catch(CandidateEligibility e){
