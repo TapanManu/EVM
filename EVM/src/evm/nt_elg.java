@@ -14,7 +14,7 @@ import evm.admin;
 public class nt_elg extends javax.swing.JFrame {
 
     /**
-     * Creates new form nt_elg
+     * Creates new form 
      */
     public nt_elg() {
         initComponents();

@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package evm;
+package evm.Gui;
+
+import evm.admin;
+import evm.nt_elg;
 
 /**
  *
@@ -109,7 +112,6 @@ public class voted extends javax.swing.JFrame {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

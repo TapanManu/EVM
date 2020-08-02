@@ -5,7 +5,7 @@
  */
 package Voter;
 
-import evm.admin;
+import evm.admin_panel;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -158,6 +158,9 @@ public class AddVoter extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(AddVoter.class.getName()).log(Level.SEVERE, null, ex);
         }
+        admin_panel a = new admin_panel();
+        a.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_okActionPerformed
 
     private void nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameActionPerformed
@@ -169,7 +172,7 @@ public class AddVoter extends javax.swing.JFrame {
     }//GEN-LAST:event_backActionPerformed
 
     private void back1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_back1ActionPerformed
-        admin a = new admin();
+        admin_panel a = new admin_panel();
         a.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_back1ActionPerformed

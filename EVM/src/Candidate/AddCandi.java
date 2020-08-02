@@ -5,7 +5,7 @@
  */
 package Candidate;
 
-import evm.admin;
+import evm.admin_panel;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -154,10 +154,13 @@ public class AddCandi extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(AddCandi.class.getName()).log(Level.SEVERE, null, ex);
         }
+        admin_panel a = new admin_panel();
+        a.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_okActionPerformed
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
-        admin a = new admin();
+        admin_panel a = new admin_panel();
         a.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backActionPerformed

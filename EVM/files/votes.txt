@@ -1,9 +1,5 @@
-AAA0000006 kannur
-AAA0000013 kannur
-AAA0000001 kochi
+NOTA kochi
 AAA0000003 kochi
 AAA0000003 kochi
-AAA0000012 kannur
-AAA0000013 kannur
-AAA0000001 kannur
-AAA0000003 kochi
+NOTA kochi
+NOTA kochi

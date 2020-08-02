@@ -4,10 +4,14 @@
  * and open the template in the editor.
  */
 package evm;
+
+import evm.admin;
+
 /**
  *
  * @author Sjith & Taps
  */
+
 public class EVM {
 
     /**
@@ -17,6 +21,7 @@ public class EVM {
     {
         admin obj=new admin();
         obj.setVisible(true);
+        new Error.Welcome();
     }
     
 }

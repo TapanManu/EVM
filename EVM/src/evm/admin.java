@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package evm;
-import Poll.Vote;
+
+import evm.admin_panel;
+
 /**
  *
  * @author robinhood
@@ -117,6 +119,9 @@ public class admin extends javax.swing.JFrame {
             a.setVisible(true);
             this.dispose();
 
+        }
+        else{
+            new Error("Wrong Passowrd",this);
         }
     }//GEN-LAST:event_loginActionPerformed
 

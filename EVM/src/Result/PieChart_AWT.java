@@ -15,6 +15,11 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JDialog;
 import java.awt.IllegalComponentStateException;
+import evm.Error;
+import evm.admin_panel;
+import javax.swing.JFrame;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowAdapter;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -27,75 +32,188 @@ import org.jfree.ui.RefineryUtilities;
 class Pie{
     public ArrayList<String> l=new ArrayList<String>();
     public ArrayList<String> r=new ArrayList<String>();
-    public ArrayList<String> msg=new ArrayList<String>();
-    
+    public ArrayList<Integer> in = new ArrayList<Integer>();
+    public boolean total = false;
     public Pie(long w,int cnt,ArrayList<String> l,ArrayList<String> r,
-            ArrayList<String> msg){
+            boolean total){
         this.l=l;
         this.r=r;
+        this.total=total;
         System.out.println(w+" "+cnt+" "+l+" "+r);
        
-        PieChart_AWT.data(w,cnt,l,r,msg);
+        PieChart_AWT.data(w,cnt,l,r,total);
         
-        //PieChart_AWT demo = new PieChart_AWT( "Candidate" );  
-
+        //PieChart_AWT demo = new PieChart_AWT( "Candidate" ); 
+    }
+    public Pie(ArrayList<String> l,ArrayList<String> r,boolean total){
+        this.l=l;
+        this.r=r;
+        this.total = total;
+        PieChart_AWT.data(l,r,total);
+    }
+    public Pie(ArrayList<Integer> in,boolean total,ArrayList<String> r){
+        this.in=in;
+        this.r=r;
+        this.total = total;
+        PieChart_AWT.data(in,total,r);
     }
 }
  
-public class PieChart_AWT extends ApplicationFrame {
+public class PieChart_AWT extends JFrame{
     public static long w;
     public static int cnt;
     public static ArrayList<String> l=new ArrayList<String>();
     public static ArrayList<String> r=new ArrayList<String>();
-    public static ArrayList<String> msg=new ArrayList<String>();
+    public static ArrayList<Integer> in = new ArrayList<Integer>();
+    
     public static String title = null;
-    static PieChart_AWT  demo;
-   
+    public static boolean flag=false;
+    public static boolean msgflag=false;
+    public static boolean dispflag=false;
+    public static boolean total = false;
+    public static boolean pollflag = false;
+    
    public PieChart_AWT( String title ) {
       super( title ); 
       try{
       setContentPane(createDemoPanel( ));
+      if(dispflag){
+          this.dispose();
+      }
       }
       catch(NullPointerException  |IllegalComponentStateException e){
           System.out.println("nothing");
       }
    }
 
-   public static void data(long w,int cnt,ArrayList<String> l,ArrayList<String> r,
-   ArrayList<String> msg){
+   public static void data(long w,int cnt,ArrayList<String> l,
+           ArrayList<String> r,boolean total){
        PieChart_AWT.w=w;
        PieChart_AWT.cnt=cnt;
        PieChart_AWT.l=l;
        PieChart_AWT.r=r;
-       PieChart_AWT.msg=msg;
-       
+       PieChart_AWT.total = total;
+       flag=false;
+       dispflag=false;
+       pollflag=false;
+       PieChart_AWT  demo;
+
        demo = new PieChart_AWT( "Candidate" );
        demo.setSize( 560 , 367 );
        
-       RefineryUtilities.centerFrameOnScreen( demo );    
-       demo.setVisible( true );
+       RefineryUtilities.centerFrameOnScreen( demo );
+       demo.setVisible(!msgflag && !total);
+       demo.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+       /*demo.addWindowListener(new WindowAdapter(){
+           public void windowClosing(WindowEvent w){
+               admin_panel a = new admin_panel();
+               a.setVisible(true);
+               demo.dispose();
+               dispflag=true;
+           }
+       });*/
+   }
+   public static void data(ArrayList<Integer> in,boolean total,
+           ArrayList<String> r){
+       PieChart_AWT.cnt=r.size();
+       PieChart_AWT.in=in;
+       PieChart_AWT.r=r;
+       PieChart_AWT.total = total;
+       flag=true;
+       dispflag=false;
+       pollflag=true;
+       
+       PieChart_AWT  polldemo;
+       polldemo = new PieChart_AWT( "Constituency wise Polled Stats" );
+       polldemo.setSize( 560 , 367 );
+       
+       RefineryUtilities.centerFrameOnScreen( polldemo );    
+       polldemo.setVisible( !msgflag && flag );
+       polldemo.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+      /* seatdemo.addWindowListener(new WindowAdapter(){
+           public void windowClosing(WindowEvent w){
+               admin_panel a = new admin_panel();
+               a.setVisible(true);
+               seatdemo.dispose();
+               dispflag=true;
+           }
+       });*/
+       
+   }
+    public static void data(ArrayList<String> l,
+           ArrayList<String> r,boolean total){
+       PieChart_AWT.cnt=r.size();
+       PieChart_AWT.l=l;
+       PieChart_AWT.r=r;
+       PieChart_AWT.total = total;
+       flag=true;
+       dispflag=false;
+       pollflag=false;
+       
+       PieChart_AWT  seatdemo;
+       seatdemo = new PieChart_AWT( "Total Seats" );
+       seatdemo.setSize( 560 , 367 );
+       
+       RefineryUtilities.centerFrameOnScreen( seatdemo );    
+       seatdemo.setVisible( !msgflag && flag );
+       seatdemo.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+      /* seatdemo.addWindowListener(new WindowAdapter(){
+           public void windowClosing(WindowEvent w){
+               admin_panel a = new admin_panel();
+               a.setVisible(true);
+               seatdemo.dispose();
+               dispflag=true;
+           }
+       });*/
        
    }
    
    public static PieDataset createDataset() {
+      msgflag=false;
       int max=0;
       DefaultPieDataset dataset = new DefaultPieDataset( );
       JDialog d;
       JLabel lab;
-      if(cnt==0){
-          title = "Invalid Constituency,No Election done ";
+      if(pollflag){
+          for(int i=0;i<cnt;i++){
+              dataset.setValue(r.get(i),new Double(in.get(i)));
+          }          
+          title="polling stats";
+          
       }
+      else{
+      if(flag){
+          title="Total seats";
+      }
+      if(!flag && (l.size()==1 || r.size()==1) && !total){
+          title = "Invalid Constituency,No Election done ";
+          msgflag=true;
+      }  
+      if(l.size()>1 && r.size()>1){
       for(int i=0;i<cnt;i++){
           int value = Integer.parseInt(l.get(i));
           dataset.setValue(r.get(i), new Double(value));
-          if(value>max){
+          if(value>max && !flag  && !r.get(i).equals("NOTA") && !total){
               max=value;
               title = r.get(i)+ " won the election by "+w+" votes";
+              msgflag=false;
           } 
-          if(max==0){
-              title = "Single Candidate only";
+          if(r.size()==2 && !flag && !r.get(i).equals("NOTA")&& !total){
+              title="Single Candidate "+ r.get(i)+ " only";
+              msgflag=true;
           }
-      }  
+          if(max==0 && !flag && r.size()!=2 && !total){
+              title = "No Election done so far!";
+              msgflag=true;
+          }
+          
+      }
+      }
+      
+      if(msgflag)
+           Error.display(title);
+      }
+
       return dataset;         
    }
    
@@ -112,20 +230,19 @@ public class PieChart_AWT extends ApplicationFrame {
    public static JPanel createDemoPanel( ) {
       System.out.println(w+" "+cnt+" "+l+" "+r);
       JFreeChart chart;
-      chart = createChart(createDataset( ));
+      PieDataset p = createDataset();
+      if(!msgflag)
+           chart = createChart(p);
+      else
+           chart = null;
       return new ChartPanel( chart ); 
    }
    
-   public static void alternatePanel(){
-       JPanel jp = new JPanel();
-       
-   }
-
-   public static void hoi() {
+   /*public static void hoi() {
       PieChart_AWT demo = new PieChart_AWT( "Candidate" );  
       demo.setSize( 560 , 367 );    
       RefineryUtilities.centerFrameOnScreen( demo ); 
       
       demo.setVisible( true ); 
-   }
+   }*/
 }

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.GregorianCalendar;
 import java.util.Calendar;
 import Poll.Valid;
+import evm.Error;
 
 
 class IOn{
@@ -25,13 +26,13 @@ class IOn{
                }
            }  
            if(flag==0){
-           	 System.out.println("no matching record");
+           	 new Error("no matching record");
            	 return null;
            }
             
         }
         catch(IOException e){
-             System.out.println("error");
+             new Error("error");
              return null;
     	}
     	return null;
@@ -75,7 +76,7 @@ class Ticket {
                 }
             }
             catch(IOException e){
-                System.out.println("error processing");
+                new Error("error processing");
             }
             return false;
         }
@@ -88,7 +89,7 @@ class Ticket {
 				//data should be read from aadhar database
         
                                 if(!isValidParty(party)){
-                                    System.out.println("unregistered party,\n application rejected");
+                                    new Error("unregistered party,\n application rejected");
                                     count++;
                                     continue;
                                 }
@@ -99,7 +100,7 @@ class Ticket {
                                      
 			         }
 			      catch(NullPointerException np){
-                      System.out.println("No voter ID! Ineligible to apply");
+                      new Error("No voter ID! Ineligible to apply");
                       count++;
                       continue;
 			    }
@@ -107,12 +108,12 @@ class Ticket {
                 getDiff(g,new GregorianCalendar());
                 }
                 catch(CandidateEligibility e){
-                      System.out.println(e.getMessage());
+                      new Error(e.getMessage());
                       count++;
                       continue;
                 }
                 catch(NumberFormatException ne){
-                  System.out.println("error");
+                  new Error("error");
                   count++;
                   continue;
                 }
@@ -139,16 +140,16 @@ class Ticket {
 				String output = cd.vid()+ " " + s + " " + cons + " " + party ;
 				out.write(output);
 				out.write("\n");
-			
+                                Error.display("Candidate added");
 			}
                 else{
-                    System.out.println("invalid registration");
+                    new Error("invalid registration");
                 }
                 ++count;
                         }
 		}
 		catch(IOException e){
-			System.out.println("The system has detected some failure!");
+			new Error("The system has detected some failure!");
 		}
 		
 	}

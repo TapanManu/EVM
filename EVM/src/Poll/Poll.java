@@ -1,9 +1,10 @@
 package Poll;
 
+import evm.Error;
 import evm.nt_elg;
-import evm.val_cons;
-import evm.voted;
-import evm.layout;
+//import evm.Gui.val_cons;
+//import evm.Gui.voted;
+//import evm.Gui.layout;
 import Poll.Votes;
 
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class Poll {
             }
             catch(IllegalBlockSizeException|InvalidKeyException|NoSuchPaddingException|
                     BadPaddingException e){
-                System.out.println("crypto error");
+                new Error("crypto error");
             }
         }
 	
@@ -56,7 +57,7 @@ public class Poll {
 		boolean valid = Valid.validCons(constituency);
 		if(!valid)
 		{
-			System.out.println("Invalid constituency!!!");
+			new Error("Invalid constituency!!!");
 			return;
 		}
 		System.out.println("Valid");
@@ -121,7 +122,7 @@ public class Poll {
 			{
 				if(line.equals(voterID))
 				{
-					System.out.println("Already voted");		//invalid case
+					new Error("Already voted");		//invalid case
 					return false;
 				}
 			}
@@ -133,18 +134,18 @@ public class Poll {
 						break;
 					else
 					{
-						System.out.println("Constituency mismatch");
+						new Error("Constituency mismatch");
 						return false;
 					}
 			}
 			if(line==null)
 			{
-				System.out.println("Voter not found");			//invalid case
+				new Error("Voter not found");			//invalid case
 				return false;
 			}
                         System.out.println(constituency+" "+candidates);
                         System.out.println(sb);
-			new Trials().trial(constituency, candidates, new String(sb));
+			new CandList(constituency, candidates, new String(sb));
 			addVoter(voterID);
 		}
 		catch(IOException e)

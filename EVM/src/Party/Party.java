@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import evm.Error;
 /**
  *
  * @author Tapan
@@ -48,7 +49,7 @@ public class Party {
               br.close();
           }
           catch(IOException e){
-              System.out.println("File not Found!");
+              new Error("File not Found!");
           }
           try{
               FileWriter w = new FileWriter("files/partyid_counter.txt");
@@ -56,7 +57,7 @@ public class Party {
               w.close();
           }
           catch(IOException ie){
-              System.out.println("File not Found!");
+              new Error("File not Found!");
           }
           if(status)
               return id + " " + partyname + " " + "0";
@@ -75,10 +76,11 @@ public class Party {
             if(result!=null){
                 out.write(result);
                 out.write("\n");
+                Error.display("New Party added");
             }
        }
        catch(IOException e){
-           System.out.println("error");
+           new Error("error");
        }
 }
 }

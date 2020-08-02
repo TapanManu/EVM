@@ -5,7 +5,8 @@ import Crypto.Encrypt;
 import java.io.IOException;
 import java.util.GregorianCalendar;
 import java.util.Calendar;
-import java.io.FileWriter; //used instead of Database to store temporary(voter's list) data 
+import java.io.FileWriter;
+import evm.Error;
 //import Voter.Voter ;   //compile in parent directory of voter i.e in src otherwise error
 
 //voter validity and removal of duplicates can be done only with address field provided!!
@@ -56,12 +57,12 @@ class NewVoter{
 				//data should be read from aadhar database or enter manually
 				String[] date=dob.split("/",3);
 				try{
-                                    System.out.println("hello");
+                                    //System.out.println("hello");
 				g = new GregorianCalendar(Integer.parseInt(date[0]),Integer.parseInt(date[1])-1,Integer.parseInt(date[2]));
                 getDiff(g,new GregorianCalendar());
                 }
                 catch(VoteEligibility e){
-                      System.out.println(e.getMessage());
+                      new Error(e.getMessage());
                       count++;
                       continue;
                 }
@@ -70,15 +71,16 @@ class NewVoter{
 				String output = v.getVoterId()+ " " + s + " " + dob +" "+c;
 				out.write(output);
 				out.write("\n");
+                                Error.display("Successfully added");
 			    }
 			    else{
-			    	System.out.println("unidentified constituency");
+			    	new Error("unidentified constituency");
 			    }
 				++count;
 			}
 		}
 		catch(IOException e){
-			System.out.println("The system has detected some failure!");
+			new Error("The system has detected some failure!");
 		}
           
             new Encrypt("files/voter.txt");
