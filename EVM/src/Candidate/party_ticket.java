@@ -46,13 +46,37 @@ class CandidateEligibility extends Exception{
 }
 
 class Ticket {
-        public static String vid,cons,party,s = null;
-        public Ticket(String s,String id,String party,String con) throws IOException{
-            this.s=s;
+        public static String vid,cons,party = null;
+        public Ticket(String id,String party,String con) throws IOException{
+            //this.s=s;
             this.vid=id;
             this.party=party;
             this.cons=con;
             candi();
+        }
+        public static String getName(String id){
+            String str=null;
+            try{
+            BufferedReader br = new BufferedReader(new FileReader("files/voter.txt"));
+            String line;
+            while((line=br.readLine())!=null){
+                System.out.println(line.split(" ",5)[0]);
+                System.out.println(id);
+                if(line.split(" ",5)[0].equals(id)){
+                    System.out.print("hello");
+                    str = line.split(" ",5)[1];
+                    break;
+                }
+
+            }
+            br.close();
+            }
+            catch(IOException |NullPointerException x){
+                new Error("No Matching name found");
+            }
+            if(str==null)
+                return null;
+            return str;
         }
 	public static void getDiff(GregorianCalendar a,GregorianCalendar b) throws CandidateEligibility{
         int diff = b.get(Calendar.YEAR) - a.get(Calendar.YEAR);
@@ -128,8 +152,15 @@ class Ticket {
                     System.out.println("file not found error");
                 }
                 */
+                String str=null;
+                try{
+                str = getName(vid);
+                }
+                catch(NullPointerException y){
+                    new Error("No matching record");
+                }
                 String[] strArray = new String[]{String.valueOf(vid).toLowerCase(),cons.toLowerCase(),
-                                                       party.toLowerCase(),s.toLowerCase()};
+                                                       party.toLowerCase(),str.toLowerCase()};
                 System.out.println(strArray[0]);
                 System.out.println(strArray[1]);
                 System.out.println(strArray[2]);
@@ -137,7 +168,7 @@ class Ticket {
                 int validity = Validity.valid(strArray);
                 if(validity==1 && Valid.validCons(cons)){
                 Candidate cd = new Candidate(vid,cons,party);
-				String output = cd.vid()+ " " + s + " " + cons + " " + party ;
+				String output = cd.vid()+ " " + str + " " + cons + " " + party ;
 				out.write(output);
 				out.write("\n");
                                 Error.display("Candidate added");

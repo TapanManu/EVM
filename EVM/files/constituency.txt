@@ -8,3 +8,4 @@
 8 thiruvanathapuram 50000000
 9 malappuram 10000000000
 10 palakkad 1933670000
+11 kasargod 130000

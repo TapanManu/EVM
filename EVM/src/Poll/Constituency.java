@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.Scanner;
 
+import evm.Error;
+
 class Constituency
 {
     //private static int no_of_constituency=0;
@@ -18,15 +20,15 @@ class Constituency
     private String name;
     private long population;
     
-    public Constituency()
+    public Constituency() throws IOException
     {
         this("",0);
     }
-    public Constituency(String name)
+    public Constituency(String name) throws IOException
     {
         this(name,0);
     }
-    public Constituency(String name , long population)
+    public Constituency(String name , long population) throws IOException
     {
         this.name=name;
         setID();
@@ -51,7 +53,7 @@ class Constituency
             e.printStackTrace();
         }
     }
-    public void writeToFile()
+    public void writeToFile() throws IOException
     {
         try{
             File f=new File("files/constituency.txt");
@@ -65,7 +67,7 @@ class Constituency
             System.out.println(e.getMessage());
         }
     }
-    public static boolean checkValid(String con){
+    public static boolean checkValid(String con) throws IOException{
         BufferedReader br = null;
         try{
             br = new BufferedReader(new FileReader("files/constituency.txt"));
@@ -83,21 +85,21 @@ class Constituency
         }
         return true;
     }
-    public static void main(String args[])
+    /*public static void addCons(String args[])
     {
         Scanner sc = new Scanner(System.in);
         String con;
         long pop;
-        System.out.println("get the constituency name");
+        //System.out.println("get the constituency name");
         con = sc.next();
-        System.out.println("get the current population");
+       // System.out.println("get the current population");
         pop = sc.nextLong();
         Boolean b = checkValid(con.toLowerCase());
         if(b)
              new Constituency(con,pop);
         else
-            System.out.println("existing constituency! Error!!");
-    }
+            new Error("existing constituency! Error!!");
+    }*/
     public String getName()
     {
         return name;
