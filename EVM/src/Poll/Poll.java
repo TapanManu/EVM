@@ -51,13 +51,13 @@ public class Poll {
             }
         }
 	
-	public Poll(String constituency)
+	public Poll(String constituency) 
 	{
 		this.constituency=constituency;
 		boolean valid = Valid.validCons(constituency);
 		if(!valid)
 		{
-			new Error("Invalid constituency!!!");
+			new Error("Invalid constituency!!!",true);
 			return;
 		}
 		System.out.println("Valid");
@@ -122,7 +122,7 @@ public class Poll {
 			{
 				if(line.equals(voterID))
 				{
-					new Error("Already voted");		//invalid case
+					new Error("Already voted",true);		//invalid case
 					return false;
 				}
 			}
@@ -134,13 +134,13 @@ public class Poll {
 						break;
 					else
 					{
-						new Error("Constituency mismatch");
+						new Error("Constituency mismatch",true);
 						return false;
 					}
 			}
 			if(line==null)
 			{
-				new Error("Voter not found");			//invalid case
+				new Error("Voter not found",true);			//invalid case
 				return false;
 			}
                         System.out.println(constituency+" "+candidates);

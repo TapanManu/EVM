@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import evm.Error;
+import java.io.IOException;
 
 import evm.admin_panel;
 
@@ -235,6 +236,7 @@ public class Res extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         String text = cons.getText();
+        
         if(Valid.validCons(text)){
            Result.pollCount(text);
         }

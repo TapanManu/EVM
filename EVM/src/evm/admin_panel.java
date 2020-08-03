@@ -11,7 +11,7 @@ import Result.Res;
 
 /**
  *
- * @author robinhood
+ * @author Sjith and Taps
  */
 public class admin_panel extends javax.swing.JFrame {
 

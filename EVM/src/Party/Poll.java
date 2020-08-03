@@ -26,7 +26,7 @@ public class Poll {
 	private int candidateCount=0;
         public String voterID;
 
-	public Poll(String constituency, String vid)
+	public Poll(String constituency, String vid) throws IOException
 	{
 		this.constituency=constituency;
                 this.voterID=vid;

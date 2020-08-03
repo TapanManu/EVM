@@ -7,7 +7,7 @@ package evm;
 
 /**
  *
- * @author robinhood
+ * @author robinhood and Tapan Manu
  */
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -28,7 +28,11 @@ public class Error {
       err(er);
       //a.setVisible(true);
   }
-
+  public Error(String er,boolean yes){
+      err(er);
+      if(yes)
+        a.setVisible(true);
+  }
   public void err(String err) {
     final JPanel panel = new JPanel();
     JOptionPane.showMessageDialog(panel, err, "Error", JOptionPane.ERROR_MESSAGE);
@@ -40,7 +44,7 @@ public class Error {
         public Welcome() {
             final JPanel panel = new JPanel();
             JOptionPane.showMessageDialog(panel, "Welcome to Digital Voting Software", "Welcome", JOptionPane.PLAIN_MESSAGE);
-            a.setVisible(true);
+           // a.setVisible(true);
         }
     }
 }

@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Valid{
-	public static boolean validCons(String consname) {
+	public static boolean validCons(String consname){
 		try{
 			BufferedReader br = new BufferedReader(new FileReader("files/constituency.txt"));
 			String line;

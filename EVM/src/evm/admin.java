@@ -6,18 +6,32 @@
 package evm;
 
 import evm.admin_panel;
-
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JOptionPane;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowAdapter;
 /**
  *
- * @author robinhood
+ * @author robinhood and Tapan Manu
  */
-public class admin extends javax.swing.JFrame {
+public class admin extends JFrame {
 
     /**
      * Creates new form admin
      */
     public admin() {
+        JPanel p = new JPanel();
         initComponents();
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent w){
+                int a = JOptionPane.showConfirmDialog(p,"Are you sure ?");
+                if(a==JOptionPane.YES_OPTION){
+                    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                }
+            }
+        });
     }
 
     /**
@@ -156,6 +170,7 @@ public class admin extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new admin().setVisible(true);
+                
             }
         });
     }
