@@ -62,7 +62,7 @@ ECI has stated that
 # Supported in Ubuntu only(as of now)
 
 
-Creators : *italic* Tapan Manu , Sujith VI , Sreejith A
+Creators : **italic** Tapan Manu , Sujith VI , Sreejith A
 
 
 
