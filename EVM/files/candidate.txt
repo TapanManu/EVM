@@ -9,3 +9,6 @@ AAA0000003 Mohanlal kochi kjp
 AAA0000009 Raghavan thiruvalla kjp
 AAA0000011 Jose Prakash thiruvalla cpm
 AAA0000021 Harry kochi congress
+AAA0000005 Usman kannur independent
+AAA0000005 Usman kochi independent
+AAA0000005 Usman thiruvalla independent

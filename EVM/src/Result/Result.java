@@ -220,6 +220,7 @@ public class Result {
            while((p=r.readLine())!=null){
            	 pr.add(p.split(" ")[1]);
            }
+           pr.add("independent");
            int t;
            for(String s:pr){
                  t = Collections.frequency(party,s);
@@ -238,8 +239,9 @@ public class Result {
             new Decrypt("files/votes.encrypted",privateKey);
     	    RandomAccessFile b = new RandomAccessFile("files/votes.decrypted","r");
             String line;
+            boolean flag=false;
             //int j=0;
-            int notavotes=0;
+            int notavotes[]=new int[length];
             for(int i=0;i<length;i++){
             	b.seek(0);
             while((line=b.readLine())!=null){
@@ -247,8 +249,8 @@ public class Result {
             		c[i].incrVotes();
                         
                 }
-                else if(line.split(" ",2)[0].equals("NOTA"))
-                        notavotes++;
+                else if(line.split(" ",2)[0].equals("NOTA") &&(line.split(" ",2)[1].equals(c[i].cons())))
+                        notavotes[i]++;
                 
             }
             if(con!=null){
@@ -260,15 +262,17 @@ public class Result {
                
             }
             }
+            if(con!=null && !flag){
+            ++cnt;
+            l.add(String.valueOf(notavotes[i]));
+            t.add("NOTA");
+            flag=true;
+            }
             
             System.out.println(c[i].vid()+ " " +c[i].getVotes()+" "+c[i].cons());
         }
             //System.out.println("set:"+l.size()+t.size());
-            if(con!=null){
-            ++cnt;
-            l.add(String.valueOf(notavotes));
-            t.add("NOTA");
-            }
+            
             
         declare(cons,c,length);
 

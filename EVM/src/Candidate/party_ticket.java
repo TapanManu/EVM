@@ -51,6 +51,8 @@ class Ticket {
             //this.s=s;
             this.vid=id;
             this.party=party;
+            if(party==null || party.equals(""))
+                this.party="independent";
             this.cons=con;
             candi();
         }
@@ -63,7 +65,7 @@ class Ticket {
                 System.out.println(line.split(" ",5)[0]);
                 System.out.println(id);
                 if(line.split(" ",5)[0].equals(id)){
-                    System.out.print("hello");
+                    //System.out.print("hello");
                     str = line.split(" ",5)[1];
                     break;
                 }
@@ -95,7 +97,8 @@ class Ticket {
                 String line ;
                 while((line=br.readLine())!=null){
                     String name = line.split(" ",3)[1];
-                    if(pname.equals(name)) //registered party 
+                    System.out.print(pname);
+                    if(pname.equals(name) || pname.equals("independent")) //registered party 
                         return true;
                 }
             }
@@ -111,7 +114,7 @@ class Ticket {
 			GregorianCalendar g;
 			while(count<1){
 				//data should be read from aadhar database
-        
+                                //System.out.print("value:"+party);
                                 if(!isValidParty(party)){
                                     new Error("unregistered party,\n application rejected");
                                     count++;

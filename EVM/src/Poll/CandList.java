@@ -186,7 +186,7 @@ public class CandList  extends javax.swing.JFrame
        
     this.constituency=constituency;
     this.candidates=candidates;
-    sb=sb+"NOTA\n ";
+    sb=sb+"NOTA\n";
     s=sb.split("\n");
     //System.out.println(sb);
     

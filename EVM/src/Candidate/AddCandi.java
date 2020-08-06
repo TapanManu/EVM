@@ -129,7 +129,12 @@ public class AddCandi extends javax.swing.JFrame {
     private void okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okActionPerformed
         //System.out.println(name.getText());
         try {
-            Ticket t = new Ticket(id.getText(),party.getText(),constitution.getText());
+            Ticket t;
+            if(party.getText()==null || party.getText().equals("independent")
+                    || party.getText().equals("")) 
+                t = new Ticket(id.getText(),"independent",constitution.getText());
+            else
+                t = new Ticket(id.getText(),party.getText(),constitution.getText());
         } catch (IOException ex) {
             Logger.getLogger(AddCandi.class.getName()).log(Level.SEVERE, null, ex);
         }
