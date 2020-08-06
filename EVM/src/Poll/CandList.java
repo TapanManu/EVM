@@ -3,6 +3,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowAdapter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -27,6 +29,7 @@ import javax.crypto.NoSuchPaddingException;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import javax.crypto.BadPaddingException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -202,7 +205,7 @@ public class CandList  extends javax.swing.JFrame
         {
             cand.add(new JButton(x));
         }
-
+        
         //str[10]="NOTA";
         int i=0;
         for(JButton j:cand)
@@ -231,8 +234,23 @@ public class CandList  extends javax.swing.JFrame
         frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
 
         // make it easy to close the application
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent w){
+                int a = JOptionPane.showConfirmDialog(frame,"Are you sure ?");
+                if(a==JOptionPane.YES_OPTION){
+                    flag=false;
+                    try{
+                        fileWrite(cand.size()+1);
+                    }
+                    catch(IllegalBlockSizeException|InvalidKeyException|NoSuchPaddingException|
+                    BadPaddingException e){
+                new Error("crypto error");
+            }
+                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                }
+            }
+        });
         // set the frame size (you'll usually want to call frame.pack())
         frame.setSize(new Dimension(400, 400));
 
