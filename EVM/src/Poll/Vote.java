@@ -5,8 +5,12 @@
  */
 package Poll;
 import evm.admin;
+import evm.Error;
 import java.sql.*;
 import javax.swing.JOptionPane;
+//import Result.Result;
+import java.io.RandomAccessFile;
+import java.io.IOException;
 /**
  *
  * @author Robinhood
@@ -22,6 +26,22 @@ public class Vote extends javax.swing.JFrame {
      */
     public Vote() {
         initComponents();
+    }
+    public static boolean electionOver(String cons){
+        try{
+            RandomAccessFile r = new RandomAccessFile("files/party_win.txt","r");
+            String line;
+            System.out.print("done");
+            while((line=r.readLine())!=null){
+                if(line.split(" ",2)[1].equals(cons.toLowerCase()))
+                    return true;
+            }
+            
+        }
+        catch(IOException e){
+            new Error("File not found");
+        }
+        return false;
     }
 
     /**
@@ -138,7 +158,16 @@ public class Vote extends javax.swing.JFrame {
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         vcon=cons.getText();
         this.dispose();
-        Poll p = new Poll(vcon);
+        Poll p;
+        if(!electionOver(vcon))
+            p = new Poll(vcon);
+        else{
+            new Error("Election Over! No voting allowed");
+            admin obj=new admin();
+            obj.setVisible(true);
+            this.dispose();  
+        }
+         
     }//GEN-LAST:event_loginActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

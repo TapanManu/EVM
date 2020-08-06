@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import Candidate.Candidate;
 import java.util.Collections;
 import evm.Error;
+import java.util.HashMap;
 
 import Crypto.Decrypt;
 import javax.crypto.IllegalBlockSizeException;
@@ -27,7 +28,17 @@ public class Result {
         public static String con="";
         public static boolean complete=false;
         public static boolean total = false;
-        public static ArrayList<Boolean> election = new ArrayList<Boolean>();
+       /* public static HashMap<String,Boolean> election = new HashMap<String,Boolean>();
+        
+        public static void setStatus(String con){
+            election.put(con,true);
+        }
+        public static boolean getStatus(String can){
+            if(election.containsKey(con)){
+                return election.get(con);
+            }
+            return false;
+        }*/
         public static int count(String str) throws IOException 
         {
             File f1=new File(str); //Creation of File Descriptor for input file
@@ -270,6 +281,7 @@ public class Result {
             }
             
             System.out.println(c[i].vid()+ " " +c[i].getVotes()+" "+c[i].cons());
+            //setStatus(c[i].cons());
         }
             //System.out.println("set:"+l.size()+t.size());
             
