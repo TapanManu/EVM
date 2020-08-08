@@ -54,7 +54,7 @@ public class AddCandi extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("<html><body align=\"center\"><font size=6> <font color=\"red\">Constitution</font><br></font></body></html>");
+        jLabel2.setText("<html><body align=\"center\"><font size=6> <font color=\"red\">Constituency</font><br></font></body></html>");
 
         jLabel3.setText("<html><body align=\"center\"><font size=6> <font color=\"red\">ID</font><br></font></body></html>");
 

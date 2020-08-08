@@ -9,3 +9,5 @@
 9 malappuram 10000000000
 10 palakkad 1933670000
 11 kasargod 130000
+12 utopia 34300000
+13 wonderland 40000

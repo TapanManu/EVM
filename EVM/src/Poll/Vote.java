@@ -70,7 +70,7 @@ public class Vote extends javax.swing.JFrame {
         jLabel1.setText("AUTHENTICATION");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("<html><body align=\"center\"> Enter your Constitution</body></html>");
+        jLabel3.setText("<html><body align=\"center\"> Enter your Constituency</body></html>");
 
         login.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         login.setText("Login");

@@ -12,3 +12,10 @@ AAA0000021 Harry kochi congress
 AAA0000005 Usman kannur independent
 AAA0000005 Usman kochi independent
 AAA0000005 Usman thiruvalla independent
+AAA0000028 william utopia democrats
+AAA0000028 william wonderland democrats
+AAA0000038 andrew wonderland republicans
+AAA0000035 jimmy utopia republicans
+AAA0000028 william kollam democrats
+AAA0000029 thomas utopia independent
+AAA0000030 uri wonderland independent

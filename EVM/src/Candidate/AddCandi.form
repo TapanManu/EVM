@@ -116,7 +116,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body align=&quot;center&quot;&gt;&lt;font size=6&gt; &lt;font color=&quot;red&quot;&gt;Constitution&lt;/font&gt;&lt;br&gt;&lt;/font&gt;&lt;/body&gt;&lt;/html&gt;"/>
+        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body align=&quot;center&quot;&gt;&lt;font size=6&gt; &lt;font color=&quot;red&quot;&gt;Constituency&lt;/font&gt;&lt;br&gt;&lt;/font&gt;&lt;/body&gt;&lt;/html&gt;"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">

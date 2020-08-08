@@ -54,13 +54,16 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel3" alignment="0" min="-2" pref="99" max="-2" attributes="0"/>
                                           <Component id="jLabel1" alignment="0" min="-2" pref="99" max="-2" attributes="0"/>
-                                          <Component id="jLabel2" min="-2" pref="136" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="144" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
                                       <Component id="jLabel4" min="-2" pref="224" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jLabel2" min="-2" pref="213" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -125,7 +128,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body align=&quot;center&quot;&gt;&lt;font size=6&gt; &lt;font color=&quot;red&quot;&gt;Constitution&lt;/font&gt;&lt;br&gt;&lt;/font&gt;&lt;/body&gt;&lt;/html&gt;"/>
+        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body align=&quot;center&quot;&gt;&lt;font size=6&gt; &lt;font color=&quot;red&quot;&gt;Constituency&lt;/font&gt;&lt;br&gt;&lt;/font&gt;&lt;/body&gt;&lt;/html&gt;"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="dob">
