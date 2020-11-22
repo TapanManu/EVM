@@ -12,6 +12,11 @@ import java.io.FileWriter;
 import java.util.Scanner;
 
 import evm.Error;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 class Constituency
 {
@@ -67,24 +72,31 @@ class Constituency
             System.out.println(e.getMessage());
         }
     }
-    public static boolean checkValid(String con) throws IOException{
-        BufferedReader br = null;
-        try{
-            br = new BufferedReader(new FileReader("files/constituency.txt"));
-            String line;
-            while((line=br.readLine())!=null){
-                String w = line.split(" ",3)[1].toLowerCase();
-                if(con.equals(w)){
-                    return false;  //already existing data,do not write to file
-                }
-            }
-            br.close();
-        }
-        catch(IOException e){
-            System.out.println("no file");
-        }
-        return true;
-    }
+    public static boolean checkValid(String con){
+       try{
+			Class.forName("com.mysql.jdbc.Driver");  
+                        Connection conss=DriverManager.getConnection(  
+                        "jdbc:mysql://localhost:3306/evm?useSSL=false","tapan","tapan*1234");  
+                          
+                        Statement stmt=conss.createStatement();  
+                        ResultSet rs=stmt.executeQuery("select * from constituency");  
+                        while(rs.next()){  
+                            String cons = rs.getString("cname");
+                            if(con.equals(cons)){
+                                return true;            //valid constituency
+                            }
+                        } 
+                        
+                        conss.close();  
+                        
+		}
+		catch(ClassNotFoundException|SQLException s){
+			System.out.println("no tables found");
+			return false;
+		}
+		return false;
+	}
+    
     /*public static void addCons(String args[])
     {
         Scanner sc = new Scanner(System.in);

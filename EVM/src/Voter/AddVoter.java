@@ -7,6 +7,7 @@ package Voter;
 
 import evm.admin_panel;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -156,7 +157,7 @@ public class AddVoter extends javax.swing.JFrame {
         System.out.println(name.getText());
         int i = Integer.parseInt(id.getText());
         try {
-            NewVoter t = new NewVoter(name.getText(),i,dob.getText(),constitution.getText());
+            NewVote t = new NewVote(name.getText(),i,dob.getText(),constitution.getText());
         } catch (IOException ex) {
             Logger.getLogger(AddVoter.class.getName()).log(Level.SEVERE, null, ex);
         }

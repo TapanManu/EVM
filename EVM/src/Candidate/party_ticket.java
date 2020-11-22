@@ -8,30 +8,40 @@ import java.util.GregorianCalendar;
 import java.util.Calendar;
 import Poll.Valid;
 import evm.Error;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 
 class IOn{
     public static String getDate(String searchid) throws IOException{
     	try{
-    	BufferedReader in = new BufferedReader(new FileReader("files/voter.txt"));
-    	int flag=0;
-    	String line;
-    	while((line=in.readLine())!=null && !(searchid.equals(null)))  
-           {  
-               String[] lsplit =  line.split(" ",5);
-               //System.out.println(lsplit[4]);
-               if(lsplit[0].equals(searchid)){
-               	 flag=1;
-               	 return (lsplit[lsplit.length-2]);
-               }
-           }  
+			Class.forName("com.mysql.jdbc.Driver"); 
+                        int flag=0;
+                        Connection con=DriverManager.getConnection(  
+                        "jdbc:mysql://localhost:3306/evm?useSSL=false","tapan","tapan*1234");  
+                          
+                        Statement stmt=con.createStatement();  
+                        ResultSet rs=stmt.executeQuery("select * from Voter"); 
+                        String id;
+                        while(rs.next()){  
+                            id = rs.getString("Voter_ID");
+                            if(id.equals(searchid)){
+                                flag=1;
+                                return rs.getDate("dob").toString();
+                            }
+                        } 
+                        
+                        con.close();  
            if(flag==0){
            	 new Error("no matching record");
            	 return null;
            }
             
         }
-        catch(IOException e){
+        catch(SQLException|ClassNotFoundException e){
              new Error("error");
              return null;
     	}
@@ -56,29 +66,35 @@ class Ticket {
             this.cons=con;
             candi();
         }
-        public static String getName(String id){
-            String str=null;
+        public static String getName(String searchid){
             try{
-            BufferedReader br = new BufferedReader(new FileReader("files/voter.txt"));
-            String line;
-            while((line=br.readLine())!=null){
-                System.out.println(line.split(" ",5)[0]);
-                System.out.println(id);
-                if(line.split(" ",5)[0].equals(id)){
-                    //System.out.print("hello");
-                    str = line.split(" ",5)[1];
-                    break;
-                }
-
-            }
-            br.close();
-            }
-            catch(IOException |NullPointerException x){
-                new Error("No Matching name found");
-            }
-            if(str==null)
-                return null;
-            return str;
+            Class.forName("com.mysql.jdbc.Driver"); 
+                        int flag=0;
+                        Connection con=DriverManager.getConnection(  
+                        "jdbc:mysql://localhost:3306/evm?useSSL=false","tapan","tapan*1234");  
+                          
+                        Statement stmt=con.createStatement();  
+                        ResultSet rs=stmt.executeQuery("select * from Voter"); 
+                        String id;
+                        while(rs.next()){  
+                            id = rs.getString("Voter_ID");
+                            if(id.equals(searchid)){
+                                flag=1;
+                                return rs.getString("Name");
+                            }
+                        } 
+                        
+                        con.close();  
+           if(flag==0){
+           	 new Error("no matching record");
+           	 return null;
+           }
+        }
+        catch(SQLException|ClassNotFoundException e){
+             new Error("error");
+             return null;
+    	}
+    	return null;
         }
 	public static void getDiff(GregorianCalendar a,GregorianCalendar b) throws CandidateEligibility{
         int diff = b.get(Calendar.YEAR) - a.get(Calendar.YEAR);
@@ -92,30 +108,39 @@ class Ticket {
         public static boolean isValidParty(String pname) throws IOException{
             try{
                 //checking if party provided is registered party or not
-                BufferedReader br = new BufferedReader(
-                      new FileReader("files/party.txt"));
-                String line ;
-                while((line=br.readLine())!=null){
-                    String name = line.split(" ",3)[1];
-                    System.out.print(pname);
-                    if(pname.equals(name) || pname.equals("independent")) //registered party 
+                Class.forName("com.mysql.jdbc.Driver");  
+                Connection con=DriverManager.getConnection(  
+                "jdbc:mysql://localhost:3306/evm?useSSL=false","tapan","tapan*1234");  
+                //here sonoo is database name, root is username and password  
+                Statement stmt=con.createStatement();  
+                ResultSet rs=stmt.executeQuery("select * from Party"); 
+                String p;
+                while(rs.next())  {
+                    p = rs.getString("pname").toLowerCase();
+                    if(pname.equals(p) || pname.equals("independent")) //registered party 
                         return true;
-                }
+                }     
+                con.close();  
             }
-            catch(IOException e){
+            catch(SQLException|ClassNotFoundException e){
                 new Error("error processing");
             }
             return false;
         }
 	public static void candi() throws IOException{
-		try(FileWriter out = new FileWriter("files/candidate.txt",true)){
+		try{
+                        Class.forName("com.mysql.jdbc.Driver");  
+                        Connection con=DriverManager.getConnection(  
+                        "jdbc:mysql://localhost:3306/evm?useSSL=false","tapan","tapan*1234");  
+                         int valid=1;
+                        Statement stmt=con.createStatement(); 
 			int count=0;
 			long cid=0;
 			GregorianCalendar g;
 			while(count<1){
 				//data should be read from aadhar database
                                 //System.out.print("value:"+party);
-                                if(!isValidParty(party)){
+                                if(!isValidParty(party.toLowerCase())){
                                     new Error("unregistered party,\n application rejected");
                                     count++;
                                     continue;
@@ -123,7 +148,7 @@ class Ticket {
 				try{
                                    String[] date;
 				  try{
-				     date = IOn.getDate(vid).split("/",4);
+				     date = IOn.getDate(vid).split("-",4);
                                      
 			         }
 			      catch(NullPointerException np){
@@ -140,7 +165,7 @@ class Ticket {
                       continue;
                 }
                 catch(NumberFormatException ne){
-                  new Error("error");
+                  new Error("number error");
                   count++;
                   continue;
                 }
@@ -168,12 +193,13 @@ class Ticket {
                 System.out.println(strArray[1]);
                 System.out.println(strArray[2]);
                 System.out.println(strArray[3]);
-                int validity = Validity.valid(strArray);
-                if(validity==1 && Valid.validCons(cons)){
+                int validity = ValidCandidate.valid(strArray);
+                if(validity==1 && Valid.validCons(cons.toLowerCase())){
                 Candidate cd = new Candidate(vid,cons,party);
-				String output = cd.vid()+ " " + str + " " + cons + " " + party ;
-				out.write(output);
-				out.write("\n");
+				
+				 String out="Insert into Candidate values('"+cd.vid()
+                                        +"','"+str+"','"+cons.toLowerCase()+"','"+party.toLowerCase()+"')";
+                                stmt.executeUpdate(out);
                                 Error.display("Candidate added");
 			}
                 else{
@@ -182,7 +208,7 @@ class Ticket {
                 ++count;
                         }
 		}
-		catch(IOException e){
+		catch(SQLException|ClassNotFoundException e){
 			new Error("The system has detected some failure!");
 		}
 		

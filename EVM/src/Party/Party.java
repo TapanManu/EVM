@@ -6,6 +6,10 @@ import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import evm.Error;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 /**
  *
  * @author Tapan
@@ -23,7 +27,7 @@ public class Party {
 
     Party(String party) throws IOException {
         this.partyname=party;
-        party();//To change body of generated methods, choose Tools | Templates.
+        party();
     }
     public long getPid(){
         return pid;
@@ -65,21 +69,23 @@ public class Party {
               return null;
     }
     public static void party() throws IOException{
-       System.out.println("");
-       try(FileWriter out = 
-               new FileWriter("files/party.txt",true))
-       {
-            Scanner sc = new Scanner(System.in);
+       try{
+            Class.forName("com.mysql.jdbc.Driver");  
+            Connection con=DriverManager.getConnection(  
+               "jdbc:mysql://localhost:3306/evm?useSSL=false","tapan","tapan*1234");  
+            Statement stmt=con.createStatement();  
+      
             String s= partyname ;
             Party p=null;
-            String result = addParty(s,p);
+            String result[] = addParty(s,p).split(" ");
             if(result!=null){
-                out.write(result);
-                out.write("\n");
+                String out="Insert into Party values('"+result[0]
+                                        +"','"+result[1]+"','"+0+"')";
+                stmt.executeUpdate(out);
                 Error.display("New Party added");
             }
        }
-       catch(IOException e){
+       catch(ClassNotFoundException|SQLException e){
            new Error("error");
        }
 }

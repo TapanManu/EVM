@@ -25,6 +25,11 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.crypto.BadPaddingException;
 
 /**
@@ -75,27 +80,33 @@ public class Poll {
 		StringBuffer str=new StringBuffer("");
 		String x;
 		try{
-			BufferedReader br=new BufferedReader(new FileReader("files/candidate.txt"));
-			while((x=br.readLine())!=null)
+                        Class.forName("com.mysql.jdbc.Driver");  
+                        Connection con=DriverManager.getConnection(  
+                        "jdbc:mysql://localhost:3306/evm?useSSL=false","tapan","tapan*1234");  
+                          
+                        Statement stmt=con.createStatement();  
+                        ResultSet rs=stmt.executeQuery("select * from Candidate");  
+			String consti,vid,cname,party;
+			while(rs.next())
 			{
-				String s[]=x.split(" ",5);		//temp change
+				consti = rs.getString("cons");
+                                vid = rs.getString("vid");
+                                cname = rs.getString("cand_name");
+                                party=rs.getString("pticket");
 				//System.out.println(s[s.length-2]);
-				if((s[s.length-2]).equals(constituency))
+				if(consti.equals(constituency))
 				{
-					str.append(s[0]+" ");
+					str.append(vid+" ");
 //					sb.append(++candidateCount);
 					sb.append(" ");
-					sb.append("<"+s[s.length-1]+">");
-					for(int i=1;i<s.length-2;i++)
-					{
-						sb.append(" "+s[i]);
-                                                //System.out.println(sb);
-					}
+					sb.append("<"+cname+"("+party+")>");
+					
 					sb.append("\n");
 				}
 			}
+                        con.close();
 		}
-		catch(IOException e)
+		catch(SQLException|ClassNotFoundException e)
 		{
 			e.printStackTrace();
 		}
@@ -107,48 +118,70 @@ public class Poll {
 	{
                 
 		String candidates[]=c.split(" ");
-		BufferedReader br,br2;
-		String line;
+		
+		
                 System.out.println(c+" "+constituency+" "+voterID);
 		try{
-                        new Decrypt("files/voter.encrypted",privateKey);
-			br= new BufferedReader(new FileReader("files/voter.decrypted"));	//votes received
-			br2= new BufferedReader(new FileReader("files/polled.txt"));	//voters who already committed
-	
-//			System.out.println("Enter your Voter Id : ");
-//			voterID=sc.nextLine();
-			//System.out.println(voterID);
-			while((line=br2.readLine())!=null)
+                        Class.forName("com.mysql.jdbc.Driver");  
+                        Connection con=DriverManager.getConnection(  
+                        "jdbc:mysql://localhost:3306/evm?useSSL=false","tapan","tapan*1234");  
+                          
+                        Statement stmt=con.createStatement();  
+                        ResultSet rs=stmt.executeQuery("select * from Polled"); 
+                        String ls;
+                        while(rs.next())
 			{
-				if(line.equals(voterID))
+                                ls = rs.getString("pvid");
+				if(ls.equals(voterID))
 				{
 					new Error("Already voted",true);		//invalid case
 					return false;
 				}
 			}
-			while((line=br.readLine())!=null)
+                        
+                        
+                        Class.forName("com.mysql.jdbc.Driver");  
+                          
+                          
+                        stmt=con.createStatement();  
+                        rs=stmt.executeQuery("select * from Voter"); 
+                        String l,s;
+                        int found=0;
+                        while(rs.next())
 			{
-				String v[]=line.split(" ");
-				if(v[0].equals(voterID))
-					if(v[v.length-1].equals(constituency))		//invalid case
-						break;
-					else
-					{
-						new Error("Constituency mismatch",true);
-						return false;
-					}
+                                l = rs.getString("Voter_ID");
+                                s = rs.getString("Constituency");
+				if(l.equals(voterID))
+				{
+                                        found=1;
+					if(s.equals(constituency))
+                                            break;
+                                        else{
+                                           new Error("Constituency mismatch",true);
+						return false; 
+                                        }
+				}
+             
 			}
-			if(line==null)
-			{
-				new Error("Voter not found",true);			//invalid case
-				return false;
-			}
+                        if(found==0){
+                            new Error("Voter not found",true);			//invalid case
+                            return false;
+                        }
+                  
+                    	//votes received
+				//voters who already committed
+	
+//			System.out.println("Enter your Voter Id : ");
+//			voterID=sc.nextLine();
+			//System.out.println(voterID);
+			
                         System.out.println(constituency+" "+candidates);
                         System.out.println(sb);
 			new CandList(constituency, candidates, new String(sb));
 			addVoter(voterID);
+                        con.close();
 		}
-		catch(IOException e)
+		catch(SQLException|ClassNotFoundException e)
 		{
 			e.printStackTrace();
 		}
@@ -159,14 +192,18 @@ public class Poll {
 	
 	private void addVoter(String v)
 	{
-		FileWriter fw;
+		
 		try{
-			fw=new FileWriter("files/polled.txt",true);
-			fw.write(v);
-			fw.write("\n");
-			fw.close();
+                        Class.forName("com.mysql.jdbc.Driver");  
+                        Connection con=DriverManager.getConnection(  
+                        "jdbc:mysql://localhost:3306/evm?useSSL=false","tapan","tapan*1234");  
+                          
+                        Statement stmt=con.createStatement();  
+                        String out="Insert into Polled values('"+v+"')";
+                        stmt.executeUpdate(out);
+			con.close();
 		}
-		catch(IOException e)
+		catch(SQLException|ClassNotFoundException e)
 		{
 			e.printStackTrace();
 		}
