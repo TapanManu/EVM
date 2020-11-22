@@ -30,6 +30,14 @@ ECI has stated that
 
 (Source : WikiPedia)
 
+PHASE 4 :  COMPLETED ON Nov 22, 2020
+
+Java Database Connectivity added to the project.
+
+DB configuration files are also added.
+
+It is advised to move the database to var/lib/mysql in Ubuntu.
+
 # How to install and run (We will be shortly releasing the software package (currently supported in Ubuntu))
 
 > 1. Install Apache NetBeans (this project is done using netbeans)
