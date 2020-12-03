@@ -29,6 +29,60 @@ import org.jfree.data.general.PieDataset;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
+import java.sql.DriverManager;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.SwingUtilities;
+
+class ResultWindow{
+    
+    public void createWindow(ArrayList<String>l,ArrayList<String>r){
+        
+        SwingUtilities.invokeLater(new Runnable(){
+           public void run(){
+                JFrame frame = new JFrame("Stats");
+                
+
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setSize(500,500);
+                
+                frame.setVisible(true);
+                JLabel[] ll = new JLabel[l.size()+1];
+                JLabel[] rr = new JLabel[r.size()+1];
+               for(int i=0;i<l.size()+1;i++){
+                    int j = i*100;
+                    if(i!=l.size()){
+                        rr[i] = new JLabel();
+                        ll[i] = new JLabel();
+                        frame.add(rr[i]);
+                        frame.add(ll[i]);
+                        
+                        
+                        rr[i].setText(r.get(i));
+                        ll[i].setText(l.get(i));
+                        rr[i].setBounds(100,100+j/2,100,100);
+                        ll[i].setBounds(250,100+j/2,100,100);
+                    }
+                    else{
+                        ll[i] = new JLabel();
+                        rr[i] =  new JLabel();
+                        ll[i].setBounds(250,450,50,50);
+                        frame.add(ll[i]);
+                    }
+                    
+                }
+                
+           }
+        });
+    }
+    
+    
+    
+}
+
+
 class Pie{
     public ArrayList<String> l=new ArrayList<String>();
     public ArrayList<String> r=new ArrayList<String>();
@@ -77,6 +131,7 @@ public class PieChart_AWT extends JFrame{
       super( title ); 
       try{
       setContentPane(createDemoPanel( ));
+      
       if(dispflag){
           this.dispose();
       }
@@ -149,7 +204,7 @@ public class PieChart_AWT extends JFrame{
        flag=true;
        dispflag=false;
        pollflag=false;
-       
+       //new ResultWindow().createWindow(l, r);
        PieChart_AWT  seatdemo;
        seatdemo = new PieChart_AWT( "Total Seats" );
        seatdemo.setSize( 560 , 367 );
@@ -169,7 +224,7 @@ public class PieChart_AWT extends JFrame{
    }
    
    public static PieDataset createDataset() {
-      msgflag=false;
+    msgflag=false;
       int max=0;
       DefaultPieDataset dataset = new DefaultPieDataset( );
       JDialog d;
@@ -195,8 +250,11 @@ public class PieChart_AWT extends JFrame{
           dataset.setValue(r.get(i), new Double(value));
           if(value>max && !flag  && !r.get(i).equals("NOTA") && !total){
               max=value;
+              
               title = r.get(i)+ " won the election by "+w+" votes";
               msgflag=false;
+              
+              
           } 
           if(r.size()==2 && !flag && !r.get(i).equals("NOTA")&& !total){
               title="Single Candidate "+ r.get(i)+ " only";
@@ -208,13 +266,15 @@ public class PieChart_AWT extends JFrame{
           }
           
       }
+      if(!flag)
+        new ResultWindow().createWindow(l,r);
       }
       
       if(msgflag)
            Error.display(title);
       }
 
-      return dataset;         
+      return dataset;           
    }
    
    private static JFreeChart createChart( PieDataset dataset ) {
@@ -231,12 +291,17 @@ public class PieChart_AWT extends JFrame{
       System.out.println(w+" "+cnt+" "+l+" "+r);
       JFreeChart chart;
       PieDataset p = createDataset();
-      if(!msgflag)
+      if(!msgflag){
            chart = createChart(p);
+           
+              
+      }
       else
            chart = null;
       return new ChartPanel( chart ); 
    }
+   
+   
    
    /*public static void hoi() {
       PieChart_AWT demo = new PieChart_AWT( "Candidate" );  
@@ -246,3 +311,4 @@ public class PieChart_AWT extends JFrame{
       demo.setVisible( true ); 
    }*/
 }
+
