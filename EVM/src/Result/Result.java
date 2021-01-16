@@ -44,6 +44,19 @@ public class Result {
             }
             return false;
         }*/
+        public static void clear_winners(){
+            try{
+            Class.forName("com.mysql.jdbc.Driver");  
+            Connection conn=DriverManager.getConnection(  
+                "jdbc:mysql://localhost:3306/evm?useSSL=false","tapan","tapan*1234");
+            Statement stmt=conn.createStatement(); 
+            stmt.executeUpdate("delete from Winner");
+            stmt.close();
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
         public static void clear_result(){
             try{
                 FileWriter fw = new FileWriter("files/party_win.txt");
@@ -85,6 +98,7 @@ public class Result {
             System.out.println(con);
             try{
                 clear_result();
+                clear_winners();
                 total=false;
                 resu();
             }
@@ -95,6 +109,7 @@ public class Result {
         public Result(){
             try{
             clear_result();
+            clear_winners();
             this.con=null;
             total=true;
             resu();
@@ -205,8 +220,11 @@ public class Result {
                 Connection conn=DriverManager.getConnection(  
                 "jdbc:mysql://localhost:3306/evm?useSSL=false","tapan","tapan*1234");  
 
-                Statement stmt=conn.createStatement();  
+                Statement stmt=conn.createStatement(); 
+                Statement ins = conn.createStatement();
                 ResultSet rs=stmt.executeQuery("select * from Candidate");
+                
+                
                 
 		//try(BufferedReader br = new BufferedReader(new FileReader("files/candidate.txt"))){
 		for(int j=0;j<cons.size();j++){
@@ -230,11 +248,15 @@ public class Result {
                                             }
                                             }
                                             String name = rs.getString("cand_name");
-					    if(isLoneCandidate(cons.get(j))){                        
+					    if(isLoneCandidate(cons.get(j))){ 
+                                                        String out="Insert into Winner values('"+c[i].cons()+"','"+c[i].party()+"')";
+                                                        ins.executeUpdate(out);
                                                         System.out.println("Winner:"+name+" of "+c[i].party()+" of "+c[i].cons()+" as no other candidate registered");
 					        	complete = true;
 					        }
                                             else if(max[j]>0){
+                                                        String out="Insert into Winner values('"+c[i].cons()+"','"+c[i].party()+"')";
+                                                        ins.executeUpdate(out);
                                                         System.out.println("Winner:"+name+" of "+c[i].party()+" of "+c[i].cons()+" by "+(max[j]-secmax[j])+" votes ");
 					    		complete = true;
 					        }
