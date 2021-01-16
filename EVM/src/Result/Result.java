@@ -44,6 +44,16 @@ public class Result {
             }
             return false;
         }*/
+        public static void clear_result(){
+            try{
+                FileWriter fw = new FileWriter("files/party_win.txt");
+                fw.write("");
+                fw.close();
+            }
+            catch(IOException i){
+                i.printStackTrace();
+            }
+        }
         public static int count(String str) throws IOException 
         {
             try{
@@ -74,6 +84,7 @@ public class Result {
             this.con=c;
             System.out.println(con);
             try{
+                clear_result();
                 total=false;
                 resu();
             }
@@ -83,6 +94,7 @@ public class Result {
         }
         public Result(){
             try{
+            clear_result();
             this.con=null;
             total=true;
             resu();
@@ -349,6 +361,7 @@ public class Result {
 	
 	public void resu() throws IOException{               
 		//read from database about unique constituencies
+                
 		ArrayList<String> cons = new ArrayList<String>();
         try{    Class.forName("com.mysql.jdbc.Driver");  
                 Connection conn=DriverManager.getConnection(  

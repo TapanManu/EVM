@@ -212,6 +212,8 @@ public class PieChart_AWT extends JFrame{
        RefineryUtilities.centerFrameOnScreen( seatdemo );    
        seatdemo.setVisible( !msgflag && flag );
        seatdemo.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+       
+       new ResultWindow().createWindow(l,r);
       /* seatdemo.addWindowListener(new WindowAdapter(){
            public void windowClosing(WindowEvent w){
                admin_panel a = new admin_panel();
@@ -267,8 +269,10 @@ public class PieChart_AWT extends JFrame{
           
       }
       if(!flag)
-        new ResultWindow().createWindow(l,r);
+         if(!total)
+            new ResultWindow().createWindow(l,r);
       }
+
       
       if(msgflag)
            Error.display(title);
