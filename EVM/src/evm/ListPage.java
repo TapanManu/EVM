@@ -33,11 +33,14 @@ public class ListPage extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jLabel1 = new javax.swing.JLabel();
+        
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("jLabel1");
         jScrollPane1.setViewportView(jLabel1);
+        
+        
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -58,7 +61,9 @@ public class ListPage extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-/*
+
+    
+    /*
     public void windowClosing(WindowEvent e){
         //new list().setVisible(true);
         System.exit(0);
@@ -77,5 +82,6 @@ public class ListPage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    
     // End of variables declaration//GEN-END:variables
 }
