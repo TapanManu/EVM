@@ -67,26 +67,30 @@ class Constituency
             fw.write(str);
             fw.close();
         }
-        catch(IOException e)
+        catch(Exception e)
         {
             System.out.println(e.getMessage());
         }
     }
-    public static boolean checkValid(String con){
+    public static boolean checkValid(String con,long pop){
        try{
 			Class.forName("com.mysql.jdbc.Driver");  
                         Connection conss=DriverManager.getConnection(  
                         "jdbc:mysql://localhost:3306/evm?useSSL=false","tapan","tapan*1234");  
                           
                         Statement stmt=conss.createStatement();  
+                        Statement st = conss.createStatement();
                         ResultSet rs=stmt.executeQuery("select * from constituency");  
                         while(rs.next()){  
                             String cons = rs.getString("cname");
+                            System.out.println(con + "   " + cons);
                             if(con.equals(cons)){
                                 return true;            //valid constituency
                             }
                         } 
                         
+                        String in = "insert into constituency values('"+con+"',"+pop+")";
+                        st.executeUpdate(in);
                         conss.close();  
                         
 		}

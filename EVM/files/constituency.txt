@@ -11,3 +11,5 @@
 11 kasargod 130000
 12 utopia 34300000
 13 wonderland 40000
+14 utopia 1509016 utopia 1500
+17 newland 9999

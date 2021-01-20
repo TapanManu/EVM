@@ -129,9 +129,11 @@ public class AddCons extends javax.swing.JFrame {
         String con = cons.getText();
         long pops = Long.parseLong(pop.getText());
         try {
-            Boolean b = Constituency.checkValid(con.toLowerCase());
-        if(b)
+            Boolean b = Constituency.checkValid(con.toLowerCase(),pops);
+        if(!b){
              new Constituency(con,pops);
+             Error.display("Constituency added");
+        }
         else
             new Error("existing constituency! Error!!");
         } catch (IOException ex) {
