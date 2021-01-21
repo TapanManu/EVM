@@ -13,3 +13,5 @@
 13 wonderland 40000
 14 utopia 1509016 utopia 1500
 17 newland 9999
+18 cochin 45000
+19 quilon 15400

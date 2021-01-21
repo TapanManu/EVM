@@ -82,13 +82,14 @@ class NewVote{
                                 }
                 if(Valid.validCons(c)){
 				Voter v = new Voter(uid,s,g,c);
+                                String id = v.getVoterId();
 				//String output = v.getVoterId()+ " " + s + " " + dob +" "+c;
-                                String out="Insert into Voter values('"+v.getVoterId()
+                                String out="Insert into Voter values('"+id
                                         +"','"+s+"','"+dob+"','"+c.toLowerCase()+"')";
                                 stmt.executeUpdate(out);
 				//out.write(output);
 				//out.write("\n");
-                                Error.display("Successfully added");
+                                Error.display("Successfully added , voter id:"+id);
 			    }
 			    else{
 			    	new Error("unidentified constituency");

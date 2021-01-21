@@ -36,7 +36,7 @@ public class Vote extends javax.swing.JFrame {
                 if(line.split(" ",2)[1].equals(cons.toLowerCase()))
                     return true;
             }
-            
+            return false;
         }
         catch(IOException e){
             new Error("File not found");

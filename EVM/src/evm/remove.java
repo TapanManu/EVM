@@ -120,10 +120,10 @@ public class remove extends javax.swing.JFrame {
                 String p;
                 while(rs.next())  {
                     String c = rs.getString("Cons");
-                    if(Vote.electionOver(c)){
+                    /*if(Vote.electionOver(c)){
                        new Error("Election over in this constituency,candidate cannot be removed");
                        return;
-                    }
+                    }*/
                     String i = rs.getString("vid");
                     if(c.equalsIgnoreCase(cons) && id.equalsIgnoreCase(i)){
                         stmt.executeUpdate("delete from Candidate where Cons='"+cons+"' and vid='"+id+"';");
