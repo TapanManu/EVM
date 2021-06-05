@@ -4,6 +4,8 @@ Hi all, Welcome to the Digital Voting Platform
 
 Its really an immense pleasure to provide you such an oppurtunity to bring you all a Voting Machine which is really apllicable in real world scenario. Now COVID has impacted our lives, It is not more possible in the near future to conduct polling as of earlier within a sinle day (or two days) following the current restrictions imposed . Its just a first step towards tackling the current problem. 
 
+**Check out our** ![wiki](https://github.com/TapanManu/EVM/wiki)
+
 # Phases
 
 Phase 1 : COMPLETED ON Jun 23 ,2020
