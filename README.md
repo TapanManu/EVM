@@ -66,11 +66,11 @@ It is advised to move the database to var/lib/mysql in Ubuntu.
 
 > 7. Discover more !!!
 
-# NB: More Features would be added in the next phase !! We will be shortly releasing the software package !! 
-# Supported in Ubuntu only(as of now)
+### NB: More Features would be added in the next phase !! We will be shortly releasing the software package !! 
+### Supported in Ubuntu only(as of now)
 
 
-Creators : ** Tapan Manu , Sujith VI , Sreejith A **
+Creators : **Tapan Manu , Sujith VI , Sreejith A**
 
 
 
